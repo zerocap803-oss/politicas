@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Privacidad · Ecomap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C2B22;
+    --paper:#EFEDE3;
+    --paper-raise:#F7F6F0;
+    --forest:#2D5F3E;
+    --forest-deep:#173523;
+    --gold:#B8891F;
+    --sage:#7C8B7B;
+    --line:#D3CFBE;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--gold); color:var(--paper-raise); }
+
+  a{ color:var(--forest); }
+
+  /* ---------- Topographic backdrop ---------- */
+  .topo-band{
+    position:relative;
+    background:var(--forest-deep);
+    color:var(--paper-raise);
+    overflow:hidden;
+    padding:5.5rem 1.5rem 4.5rem;
+  }
+  .topo-band svg.contours{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    opacity:0.16;
+  }
+  .hero-inner{
+    position:relative;
+    max-width:920px;
+    margin:0 auto;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:#9FC7A8;
+    display:flex;
+    align-items:center;
+    gap:0.6rem;
+    margin-bottom:1.4rem;
+  }
+  .eyebrow::before{
+    content:"";
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 0 4px rgba(184,137,31,0.22);
+    flex-shrink:0;
+  }
+  h1.hero-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(2.4rem, 5.2vw, 3.8rem);
+    line-height:1.05;
+    margin:0 0 1.1rem;
+    letter-spacing:-0.01em;
+  }
+  .hero-title em{
+    font-style:italic;
+    font-weight:500;
+    color:#9FC7A8;
+  }
+  .hero-sub{
+    max-width:56ch;
+    color:#D7E4D9;
+    font-size:1.05rem;
+    margin:0 0 2rem;
+  }
+  .hero-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.75rem 2rem;
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.82rem;
+    color:#A9BFAE;
+    border-top:1px solid rgba(255,255,255,0.14);
+    padding-top:1.3rem;
+  }
+  .hero-meta strong{ color:#EFEDE3; font-weight:500; }
+
+  /* ---------- Layout ---------- */
+  .layout{
+    max-width:1120px;
+    margin:0 auto;
+    padding:3.5rem 1.5rem 6rem;
+    display:grid;
+    grid-template-columns:250px 1fr;
+    gap:3.5rem;
+    align-items:start;
+  }
+
+  /* ---------- Legend / TOC ---------- */
+  .legend{
+    position:sticky;
+    top:2rem;
+    background:var(--paper-raise);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:1.4rem 1.3rem;
+  }
+  .legend-title{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--sage);
+    margin:0 0 1rem;
+    padding-bottom:0.8rem;
+    border-bottom:1px solid var(--line);
+  }
+  .legend ol{
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:0.15rem;
+  }
+  .legend a{
+    display:flex;
+    align-items:center;
+    gap:0.65rem;
+    text-decoration:none;
+    color:var(--ink);
+    font-size:0.88rem;
+    padding:0.5rem 0.4rem;
+    border-radius:3px;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .legend a:hover, .legend a:focus-visible{
+    background:rgba(45,95,62,0.08);
+    color:var(--forest-deep);
+    outline:none;
+  }
+  .legend a:focus-visible{
+    box-shadow:0 0 0 2px var(--forest);
+  }
+  .pin{
+    flex-shrink:0;
+    width:20px; height:20px;
+    display:grid;
+    place-items:center;
+  }
+  .pin svg{ width:100%; height:100%; }
+
+  /* ---------- Content ---------- */
+  .content{ min-width:0; }
+
+  .contact-card{
+    background:var(--paper-raise);
+    border:1px solid var(--line);
+    border-left:4px solid var(--forest);
+    border-radius:3px;
+    padding:1.1rem 1.3rem;
+    margin:0 0 3rem;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:0.5rem 0.9rem;
+  }
+  .contact-card .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.75rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--sage);
+  }
+  .contact-card a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.95rem;
+    font-weight:500;
+    color:var(--forest-deep);
+    text-decoration:none;
+    border-bottom:1px solid var(--gold);
+  }
+  .contact-card a:hover{ color:var(--gold); }
+
+  section.clause{
+    padding-bottom:2.6rem;
+    margin-bottom:2.6rem;
+    border-bottom:1px solid var(--line);
+    scroll-margin-top:2rem;
+  }
+  section.clause:last-of-type{
+    border-bottom:none;
+  }
+
+  .clause-head{
+    display:flex;
+    align-items:baseline;
+    gap:0.9rem;
+    margin-bottom:1.1rem;
+  }
+  .clause-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.95rem;
+    color:var(--gold);
+    font-weight:500;
+    flex-shrink:0;
+  }
+  h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.55rem;
+    margin:0;
+    color:var(--forest-deep);
+    letter-spacing:-0.01em;
+  }
+  h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-style:italic;
+    font-size:1.12rem;
+    color:var(--forest);
+    margin:1.6rem 0 0.7rem;
+  }
+  p{ margin:0 0 1rem; color:#33402F; }
+  p:last-child{ margin-bottom:0; }
+  strong{ color:var(--ink); font-weight:600; }
+
+  ul.clause-list{
+    margin:0 0 1rem;
+    padding-left:0;
+    list-style:none;
+  }
+  ul.clause-list li{
+    position:relative;
+    padding-left:1.4rem;
+    margin-bottom:0.6rem;
+    color:#33402F;
+  }
+  ul.clause-list li::before{
+    content:"";
+    position:absolute;
+    left:0; top:0.55rem;
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--gold);
+  }
+
+  .note{
+    background:rgba(45,95,62,0.06);
+    border:1px solid rgba(45,95,62,0.18);
+    border-radius:3px;
+    padding:0.9rem 1.1rem;
+    font-size:0.94rem;
+    color:var(--forest-deep);
+    margin:0.9rem 0;
+  }
+  .note strong{ color:var(--forest-deep); }
+
+  .end-note{
+    text-align:center;
+    padding:3rem 1.5rem 4rem;
+    color:var(--sage);
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.82rem;
+  }
+  .end-note a{
+    color:var(--forest);
+    text-decoration:none;
+    border-bottom:1px solid var(--gold);
+  }
+
+  /* ---------- Back to top ---------- */
+  .to-top{
+    position:fixed;
+    bottom:1.6rem;
+    right:1.6rem;
+    background:var(--forest-deep);
+    color:var(--paper-raise);
+    width:44px; height:44px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    text-decoration:none;
+    box-shadow:0 4px 14px rgba(0,0,0,0.2);
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(8px);
+    transition:opacity 0.2s ease, transform 0.2s ease;
+  }
+  .to-top.visible{
+    opacity:1;
+    pointer-events:auto;
+    transform:translateY(0);
+  }
+  .to-top:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:2px;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px){
+    .layout{
+      grid-template-columns:1fr;
+      padding-top:2.5rem;
+    }
+    .legend{
+      position:static;
+      order:-1;
+    }
+    .legend ol{
+      flex-direction:row;
+      flex-wrap:wrap;
+    }
+    .legend a{ font-size:0.82rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .to-top{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topo-band">
+  <svg class="contours" viewBox="0 0 1200 500" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M -50 380 Q 200 300 400 380 T 900 360 T 1300 400" fill="none" stroke="#9FC7A8" stroke-width="1.5"/>
+    <path d="M -50 410 Q 220 340 420 410 T 920 390 T 1300 430" fill="none" stroke="#9FC7A8" stroke-width="1.5"/>
+    <path d="M -50 440 Q 240 380 440 440 T 940 420 T 1300 460" fill="none" stroke="#9FC7A8" stroke-width="1.5"/>
+    <path d="M -50 60 Q 150 130 350 70 T 800 90 T 1300 50" fill="none" stroke="#9FC7A8" stroke-width="1.5"/>
+    <path d="M -50 30 Q 170 100 370 40 T 820 60 T 1300 20" fill="none" stroke="#9FC7A8" stroke-width="1.5"/>
+    <circle cx="860" cy="90" r="4" fill="#B8891F"/>
+    <circle cx="340" cy="400" r="4" fill="#B8891F"/>
+  </svg>
+  <div class="hero-inner">
+    <p class="eyebrow">Ecomap · Documento legal</p>
+    <h1 class="hero-title">Política de<br><em>Privacidad</em></h1>
+    <p class="hero-sub">Este documento explica, en lenguaje claro, qué información recopila Ecomap, cómo se usa, dónde se almacena y qué control tiene el usuario sobre sus propios datos.</p>
+    <div class="hero-meta">
+      <span>Última actualización: <strong>09 de julio de 2026</strong></span>
+      <span>Contacto: <strong>zerocap803@gmail.com</strong></span>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <nav class="legend" aria-label="Índice de la política">
+    <p class="legend-title">Leyenda del mapa</p>
+    <ol>
+      <li><a href="#contacto"><span class="pin">📍</span>Contacto</a></li>
+      <li><a href="#recopilamos"><span class="pin">📍</span>Qué recopilamos</a></li>
+      <li><a href="#permisos"><span class="pin">📍</span>Permisos del dispositivo</a></li>
+      <li><a href="#seguridad"><span class="pin">📍</span>Almacenamiento y seguridad</a></li>
+      <li><a href="#terceros"><span class="pin">📍</span>Servicios de terceros</a></li>
+      <li><a href="#uso"><span class="pin">📍</span>Uso de la información</a></li>
+      <li><a href="#eliminacion"><span class="pin">📍</span>Eliminación de datos</a></li>
+      <li><a href="#derechos"><span class="pin">📍</span>Derechos del usuario</a></li>
+      <li><a href="#menores"><span class="pin">📍</span>Privacidad de menores</a></li>
+      <li><a href="#cambios"><span class="pin">📍</span>Cambios en la política</a></li>
+      <li><a href="#consentimiento"><span class="pin">📍</span>Consentimiento</a></li>
+    </ol>
+  </nav>
+
+  <main class="content">
+
+    <p style="max-width:64ch; margin-bottom:2.2rem; color:#33402F;">
+      Bienvenido a Ecomap. Esta Política de Privacidad describe cómo recopilamos, utilizamos, almacenamos y protegemos la información de los usuarios que utilizan nuestra aplicación móvil ("la App"), disponible en Google Play Store. Al utilizar Ecomap, usted acepta las prácticas descritas en este documento.
+    </p>
+
+    <div class="contact-card" id="contacto">
+      <span class="label">Contacto de privacidad</span>
+      <a href="mailto:zerocap803@gmail.com">zerocap803@gmail.com</a>
+    </div>
+
+    <section class="clause" id="recopilamos">
+      <div class="clause-head">
+        <span class="clause-num">01</span>
+        <h2>Información que recopilamos</h2>
+      </div>
+
+      <h3>Inicio de sesión con Google</h3>
+      <p>Ecomap utiliza <strong>exclusivamente</strong> el inicio de sesión mediante la cuenta de Google del usuario como método de autenticación. No ofrecemos registro mediante correo y contraseña propios ni a través de otras redes sociales.</p>
+
+      <h3>Datos personales recopilados</h3>
+      <p>Al iniciar sesión y utilizar la App, recopilamos los siguientes datos:</p>
+      <ul class="clause-list">
+        <li><strong>Nombre del usuario:</strong> obtenido a través de su cuenta de Google. Este dato se utiliza únicamente para personalizar la interfaz de la aplicación (por ejemplo, para mostrar un saludo como "Hola, [Nombre]"). No se comparte ni se utiliza con otros fines.</li>
+        <li><strong>Facultad y Carrera:</strong> información académica que el usuario proporciona dentro de la App. Estos datos se almacenan con el fin de que, en el futuro, puedan ser utilizados para implementar un sistema de recompensas dentro de la aplicación.</li>
+      </ul>
+      <p>No recopilamos direcciones de correo electrónico adicionales, números de teléfono, ni ningún otro dato personal más allá de lo mencionado anteriormente.</p>
+    </section>
+
+    <section class="clause" id="permisos">
+      <div class="clause-head">
+        <span class="clause-num">02</span>
+        <h2>Permisos del dispositivo</h2>
+      </div>
+
+      <h3>Permiso de cámara</h3>
+      <p>Ecomap solicita acceso a la <strong>cámara del dispositivo</strong> con un propósito exclusivo: permitir que el usuario tome fotografías de <strong>basura o residuos</strong> encontrados en su entorno, con el fin de reportarlos dentro de la aplicación.</p>
+      <div class="note">
+        <strong>Importante:</strong> se instruye expresamente a los usuarios a no tomar fotografías de personas. La finalidad del permiso de cámara está limitada estrictamente a la documentación de residuos y no debe utilizarse para capturar imágenes de individuos.
+      </div>
+      <p>Ecomap no accede a la cámara para ningún otro fin, ni recopila fotografías almacenadas previamente en la galería del dispositivo sin una acción explícita del usuario.</p>
+    </section>
+
+    <section class="clause" id="seguridad">
+      <div class="clause-head">
+        <span class="clause-num">03</span>
+        <h2>Almacenamiento y seguridad de los datos</h2>
+      </div>
+
+      <h3>Servidor de almacenamiento</h3>
+      <p>Toda la información recopilada por Ecomap —incluyendo datos personales (nombre, facultad, carrera) y las fotografías tomadas por los usuarios— se envía y almacena de forma segura utilizando los servicios de <strong>Supabase</strong>, una plataforma de backend como servicio (BaaS) que proporciona infraestructura de base de datos y almacenamiento en la nube.</p>
+
+      <h3>Acceso restringido a los datos</h3>
+      <p>El acceso a la base de datos y a los archivos almacenados está estrictamente restringido. Únicamente el <strong>administrador principal de la aplicación</strong> cuenta con privilegios para:</p>
+      <ul class="clause-list">
+        <li>Acceder a la base de datos.</li>
+        <li>Descargar la información recopilada (en formato PDF).</li>
+        <li>Editar o eliminar de forma definitiva las imágenes y los datos almacenados en el servidor.</li>
+      </ul>
+      <p>Ningún otro usuario, colaborador o tercero tiene acceso a esta información.</p>
+
+      <h3>Medidas de seguridad</h3>
+      <p>Implementamos medidas de seguridad razonables, incluyendo las proporcionadas por la infraestructura de Supabase, para proteger su información contra accesos no autorizados, alteración, divulgación o destrucción.</p>
+    </section>
+
+    <section class="clause" id="terceros">
+      <div class="clause-head">
+        <span class="clause-num">04</span>
+        <h2>Servicios de terceros</h2>
+      </div>
+
+      <p>Ecomap se compromete con la transparencia respecto al uso de servicios externos:</p>
+      <ul class="clause-list">
+        <li><strong>No utilizamos servicios de análisis de terceros.</strong> La App no integra herramientas como Google Analytics, Firebase Crashlytics ni ninguna otra herramienta de seguimiento, análisis de uso o reporte de fallos de terceros.</li>
+        <li><strong>No utilizamos APIs de mapas de terceros que rastreen la ubicación en tiempo real.</strong> Ecomap no utiliza Google Maps ni servicios similares. El sistema de mapeo dentro de la App funciona únicamente mediante una imagen estática, sobre la cual se marcan puntos de interés internos definidos por la propia aplicación. No se recopila ni se rastrea la ubicación GPS en tiempo real del usuario.</li>
+      </ul>
+    </section>
+
+    <section class="clause" id="uso">
+      <div class="clause-head">
+        <span class="clause-num">05</span>
+        <h2>Uso de la información</h2>
+      </div>
+
+      <p>La información recopilada se utiliza exclusivamente para los siguientes fines:</p>
+      <ul class="clause-list">
+        <li>Personalizar la experiencia del usuario dentro de la App (mostrar su nombre).</li>
+        <li>Asociar los reportes de residuos con la facultad y carrera del usuario, con miras a un futuro sistema de recompensas.</li>
+        <li>Permitir que el administrador principal revise, gestione y organice los reportes de residuos enviados por los usuarios.</li>
+      </ul>
+      <p>No utilizamos, vendemos ni compartimos la información personal de los usuarios con fines publicitarios ni con terceros ajenos a lo descrito en esta política.</p>
+    </section>
+
+    <section class="clause" id="eliminacion">
+      <div class="clause-head">
+        <span class="clause-num">06</span>
+        <h2>Eliminación de datos</h2>
+      </div>
+
+      <p>Si usted desea solicitar la <strong>eliminación de sus datos personales</strong> (nombre, facultad, carrera) y/o de las fotografías asociadas a su cuenta almacenadas en nuestros servidores, puede hacerlo enviando una solicitud al siguiente correo electrónico:</p>
+      <div class="contact-card">
+        <span class="label">Solicitud de eliminación</span>
+        <a href="mailto:zerocap803@gmail.com">zerocap803@gmail.com</a>
+      </div>
+      <p>Una vez recibida su solicitud, el administrador principal de la aplicación procederá a eliminar de forma definitiva la información correspondiente de la base de datos en Supabase, dentro de un plazo razonable.</p>
+    </section>
+
+    <section class="clause" id="derechos">
+      <div class="clause-head">
+        <span class="clause-num">07</span>
+        <h2>Derechos del usuario</h2>
+      </div>
+
+      <p>Como usuario de Ecomap, usted tiene derecho a:</p>
+      <ul class="clause-list">
+        <li>Solicitar acceso a los datos personales que tenemos almacenados sobre usted.</li>
+        <li>Solicitar la corrección de datos inexactos.</li>
+        <li>Solicitar la eliminación total de sus datos, conforme a lo descrito en la sección anterior.</li>
+      </ul>
+      <p>Todas estas solicitudes pueden gestionarse a través del correo de contacto proporcionado.</p>
+    </section>
+
+    <section class="clause" id="menores">
+      <div class="clause-head">
+        <span class="clause-num">08</span>
+        <h2>Privacidad de menores</h2>
+      </div>
+
+      <p>Ecomap no está dirigida a niños menores de 13 años. No recopilamos, a sabiendas, información personal de menores de edad. Si tiene conocimiento de que un menor nos ha proporcionado información personal sin el consentimiento correspondiente, por favor contáctenos para proceder con su eliminación.</p>
+    </section>
+
+    <section class="clause" id="cambios">
+      <div class="clause-head">
+        <span class="clause-num">09</span>
+        <h2>Cambios en esta Política de Privacidad</h2>
+      </div>
+
+      <p>Nos reservamos el derecho de actualizar o modificar esta Política de Privacidad en cualquier momento, con el fin de reflejar cambios en nuestras prácticas, funcionalidades de la App o requisitos legales. Cualquier cambio será publicado en este mismo documento, indicando la fecha de la última actualización en la parte superior.</p>
+      <p>Se recomienda a los usuarios revisar esta política periódicamente para mantenerse informados sobre cómo protegemos su información.</p>
+    </section>
+
+    <section class="clause" id="consentimiento">
+      <div class="clause-head">
+        <span class="clause-num">10</span>
+        <h2>Consentimiento</h2>
+      </div>
+
+      <p>Al utilizar la aplicación Ecomap, usted declara haber leído y comprendido esta Política de Privacidad, y otorga su consentimiento para el tratamiento de sus datos conforme a lo aquí descrito.</p>
+    </section>
+
+  </main>
+</div>
+
+<p class="end-note">Ecomap — Política de Privacidad · Consultas: <a href="mailto:zerocap803@gmail.com">zerocap803@gmail.com</a></p>
+
+<a href="#top" class="to-top" id="toTopBtn" aria-label="Volver arriba">↑</a>
+
+<script>
+  const toTopBtn = document.getElementById('toTopBtn');
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 600){
+      toTopBtn.classList.add('visible');
+    } else {
+      toTopBtn.classList.remove('visible');
+    }
+  });
+</script>
+
+</body>
+</html>
